@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>足球胜平负 · 专业分析站 | cnweb-wdl.com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fcedd5 0%, #f7d6b3 70%, #eebd92 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2rem 1rem 3rem;
+            color: #3d2c1a;
+            line-height: 1.6;
+        }
+
+        .page-wrap {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* 白色卡片群落 */
+        .card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(2px);
+            border-radius: 36px 12px 36px 12px;
+            box-shadow: 0 10px 28px rgba(160, 95, 50, 0.12), 0 2px 6px rgba(0, 0, 0, 0.02);
+            padding: 2.2rem 2.5rem;
+            margin-bottom: 2rem;
+            transition: box-shadow 0.2s, transform 0.1s;
+            border: 1px solid rgba(255, 235, 210, 0.7);
+        }
+
+        .card:hover {
+            box-shadow: 0 16px 36px rgba(140, 80, 30, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* hero */
+        .hero {
+            text-align: center;
+            padding: 3rem 2.5rem 2.8rem;
+            background: rgba(255, 248, 238, 0.75);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 215, 170, 0.6);
+            border-radius: 48px 8px 48px 8px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 650;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #a8501a, #c4672b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero .sub {
+            font-size: 1.2rem;
+            color: #64462a;
+            max-width: 700px;
+            margin: 0 auto 1.2rem;
+            font-weight: 400;
+        }
+
+        .hero .tagline {
+            display: inline-block;
+            background: #dba478;
+            color: #2f1d0c;
+            padding: 0.35rem 1.6rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid #eabd96;
+            margin-top: 0.3rem;
+        }
+
+        .hero .tagline i {
+            font-style: normal;
+            background: #ffffffb3;
+            padding: 0.1rem 0.6rem;
+            border-radius: 32px;
+            margin-left: 0.3rem;
+        }
+
+        /* 特点网格 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 0.5rem 0 0.3rem;
+        }
+
+        .feature-item {
+            background: rgba(253, 243, 230, 0.7);
+            padding: 1.2rem 1.2rem 1.5rem;
+            border-radius: 24px 8px 24px 8px;
+            border-left: 5px solid #c9753b;
+        }
+
+        .feature-item h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.4rem;
+            color: #4e3017;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            font-size: 0.95rem;
+            color: #4c3824;
+        }
+
+        /* 说明区两列 */
+        .explain-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+        }
+
+        .explain-left {
+            flex: 1.2;
+            min-width: 220px;
+        }
+
+        .explain-right {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(245, 222, 196, 0.35);
+            padding: 1.2rem 1.5rem;
+            border-radius: 32px 6px 32px 6px;
+        }
+
+        .explain-right ul {
+            list-style: none;
+        }
+
+        .explain-right li {
+            margin-bottom: 0.6rem;
+            padding-left: 1.6rem;
+            position: relative;
+        }
+
+        .explain-right li::before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+            color: #b4622b;
+        }
+
+        .faq-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .faq-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #eedbc8;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            min-width: 110px;
+            color: #553519;
+        }
+
+        .faq-a {
+            color: #3e2c1c;
+        }
+
+        /* 底部链接 */
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1.2rem 2.2rem;
+            padding: 1.2rem 1rem 0.8rem;
+            border-top: 1px solid rgba(160, 100, 55, 0.2);
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: #6f4121;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.25rem 1.2rem;
+            border-radius: 60px;
+            background: rgba(255, 215, 170, 0.3);
+            border: 1px solid transparent;
+            transition: all 0.15s;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            background: #db9e6f;
+            color: #1f1309;
+            border-color: #ba7e4b;
+            text-decoration: none;
+        }
+
+        .footer-links .special-link {
+            background: #c9753b;
+            color: #fcf3e8;
+            border-color: #b26228;
+            padding: 0.35rem 1.6rem;
+            font-weight: 550;
+        }
+
+        .footer-links .special-link:hover {
+            background: #ae5f27;
+            color: white;
+        }
+
+        .footnote {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #795738;
+            margin-top: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* 响应式 */
+        @media (max-width: 650px) {
+            body { padding: 1.2rem 0.8rem; }
+            .card { padding: 1.6rem 1.2rem; }
+            .hero { padding: 2rem 1.2rem; }
+            .hero h1 { font-size: 2.1rem; }
+            .explain-wrap { flex-direction: column; }
+            .footer-links { gap: 0.8rem; }
+        }
+
+        @media (max-width: 420px) {
+            .feature-grid { grid-template-columns: 1fr; }
+            .faq-row { flex-direction: column; }
+            .faq-q { min-width: auto; }
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid rgba(170, 120, 70, 0.2);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- hero 区 -->
+    <div class="card hero">
+        <h1>足球胜平负 · 数据站</h1>
+        <div class="sub">基于赛事统计与公开资讯，为关注<a href="https://cnweb-wdl.com" style="color:#a54f1b; text-decoration: underline; text-underline-offset: 3px;">足球胜平负</a>的爱好者提供结构化的信息参考。</div>
+        <div class="tagline">聚焦 胜平负 基础逻辑 · 不预测 不诱导</div>
+    </div>
+
+    <!-- 优势区 / 特点卡片 -->
+    <div class="card">
+        <h2 style="font-weight: 550; font-size:1.6rem; margin-bottom: 1rem; color:#442e19;">站点定位与特点</h2>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <h3>清晰分类</h3>
+                <p>按联赛、球队、轮次整理公开数据，降低信息筛选成本。</p>
+            </div>
+            <div class="feature-item">
+                <h3>中立视角</h3>
+                <p>不输出倾向性结论，仅呈现统计趋势与基本面对比。</p>
+            </div>
+            <div class="feature-item">
+                <h3>轻量结构</h3>
+                <p>页面简洁，信息层级明确，适配手机与桌面阅读。</p>
+            </div>
+        </div>
+        <p style="margin-top: 1rem; color:#4d351e; font-size:0.95rem;">网站不提供投注、推荐或任何形式的保证，所有内容仅供对比赛过程感兴趣的浏览者参考。</p>
+    </div>
+
+    <!-- 说明区 + 可信说明 -->
+    <div class="card">
+        <div class="explain-wrap">
+            <div class="explain-left">
+                <h3 style="font-size:1.4rem; font-weight:540; margin-bottom:0.8rem;">关于站内信息</h3>
+                <p>cnweb-wdl.com 围绕 <strong>足球胜平负</strong> 这一经典竞猜维度，整理球队近期战绩、主客场表现、进球/失球分布等可验证的数据。每项数据均标注来源或计算方式，方便使用者核验。</p>
+                <p style="margin-top:0.7rem;">网站无会员系统、无付费内容、无隐性跳转。我们专注于信息展示，不介入任何决策建议。</p>
+            </div>
+            <div class="explain-right">
+                <h4 style="font-weight:560; margin-bottom:0.6rem; color:#452f18;">数据可信说明</h4>
+                <ul>
+                    <li>赛事结果取自公开竞赛记录</li>
+                    <li>赔率/概率类标注为“仅供参考”</li>
+                    <li>不合成、不推测未发生场次</li>
+                    <li>定期核验数据时效性</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="card">
+        <h3 style="font-size:1.4rem; margin-bottom:1.2rem; font-weight:540;">常见疑问摘要</h3>
+        <div class="faq-mini">
+            <div class="faq-row">
+                <span class="faq-q">数据更新频率？</span>
+                <span class="faq-a">主要联赛每轮结束后24小时内同步赛果与统计。</span>
+            </div>
+            <div class="faq-row">
+                <span class="faq-q">是否包含预测？</span>
+                <span class="faq-a">不包含。站内不出现“推荐”“必看”等表述。</span>
+            </div>
+            <div class="faq-row">
+                <span class="faq-q">手机浏览兼容？</span>
+                <span class="faq-a">全响应式，卡片布局自适应屏幕宽度。</span>
+            </div>
+            <div class="faq-row" style="border-bottom: none;">
+                <span class="faq-q">可以转载数据吗？</span>
+                <span class="faq-a">引用时建议保留出处链接，不主张版权但尊重劳动。</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部链接和声明 -->
+    <div class="card" style="padding-bottom: 1.5rem;">
+        <div class="footer-links">
+            <a href="https://cnweb-wdl.com" class="special-link">足球胜平负</a>
+            <a href="#">基础数据说明</a>
+            <a href="#">常见联赛覆盖</a>
+            <a href="#">隐私简览</a>
+        </div>
+        <div class="footnote">
+            <span>cnweb-wdl.com · 关于足球胜平负的公开信息站点  |  内容仅供个人学习与参考</span>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
